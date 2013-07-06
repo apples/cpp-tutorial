@@ -20,7 +20,41 @@ Basic usage of `gcc`:
     gcc my_code.cpp
 
 Where `my_code.cpp` is your source code file.
-This will produce an executable called `a.out` or something.
+This will produce an executable called `a.out` that you can run from a terminal.
+
+## 1.0 - Basic Input/Output
+
+To help you out in the coming battle,
+here is a quick and dirty intro to console interaction:
+
+    #include <iostream>
+    using namespace std;
+    
+    int main()
+    {
+        int var1 = 7;
+        
+        cout << "var1 is " << var1 << endl;
+        
+        cout << "Enter a new value: ";
+        cin >> var1;
+        
+        cout << "var1 is " << var1 << endl;
+        
+        return 0;
+    }
+
+So you probably don't understand any of this yet,
+but just bear with me for a while.
+
+The objects `cout` and `cin` are streams that represent the console;
+`cout` is the output stream, and `cin` is the input stream.
+
+To output a value using `cout`, you must insert (`<<`) a value into it.
+Similarly, you can extract (`>>`) values from `cin`.
+
+That's all you get for now,
+more details will come along later.
 
 ## 1.1 - The `main()` Function
 
@@ -113,22 +147,6 @@ like so:
 
 I challenge you to figure out the resulting values of the three variables.
 
-As a gesture of kindness:
-If you are planning on compiling and running code,
-you can print values to the console using the following technique:
-
-    #include <iostream>
-    using namespace std;
-    int main()
-    {
-        int var1 = 7;
-        double var2 = 5.5;
-        cout << "var1 is " << var1 << endl;
-        return 0;
-    }
-
-All will be explained, in time.
-
 ### 1.2.3 - Basic Operations
 
 You'll find that the most basic arithmetic operations are avaialable in C++.
@@ -214,8 +232,8 @@ Here is an array of 20 `int`s:
 Arrays are accessed using subscripts:
 
     int arr1[20];
-    int first  = arr1[0];
-    int second = arr1[1];
+    int zeroth = arr1[0];
+    int first  = arr1[1];
 
 You can have an array of arrays:
 
@@ -260,11 +278,21 @@ And, of course, pointers can be reassigned and whatnot:
 
     int  var1 = 7;
     int* prt1 = &var1;
-    
+
     int* ptr2;
     ptr2 = ptr1;
     ptr1 = nullptr;
     *ptr2 = 12;
+
+One more quick thing; you can treat pointers like arrays:
+
+    int  arr1[20];          //declare an array of 20 ints
+    int* ptr1 = &arr1[0];   //pointer to zeroth element of arr1 stored into ptr1
+    ptr1[12] = 54;          //54 stored into the 12th elemnent after ptr1
+    
+    int  arr1[20];          //declare an array of 20 ints
+    int* ptr1 = &arr1[5];   //pointer to 5th element of arr1 stored into ptr1
+    ptr1[7] = 54;           //54 stored into the 7th elemnent after ptr1 (12th of arr1)
 
 ### 1.4.2 - References
 
