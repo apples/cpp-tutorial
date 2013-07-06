@@ -344,7 +344,7 @@ Make a function! Go!
 
 Done! Let's break it down:
 
-    int                 //This is the type of the value that will be returned.
+    int                 //This is the type of the value that will be returned
         add             //This is the name of the function
         (   int a       //Function parameters are similar to declarations
           , int b       //A function can take any number of parameters
