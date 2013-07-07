@@ -122,7 +122,7 @@ Even flatter:
 
 So flat.
 We're only comparing `x` to two other values, though.
-What if we want to compare it to like ten values?
+What if we want to compare it to ten values?
 That brings us to...
  
 ### 2.1.3 - `switch`
@@ -130,9 +130,10 @@ That brings us to...
 Honestly, the `switch` statement is not entirely useful.
 It only works for integer types,
 and can only test equivalence.
+It also
 Nevertheless, a C++ tutorial would not be complete without this section.
 
-First, and example:
+First, an example:
 
     int x = 2;
     

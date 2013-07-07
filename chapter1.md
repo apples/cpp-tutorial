@@ -246,6 +246,21 @@ Arrays are initialized using `initializer lists`:
 That's pretty much all there is about arrays.
 Note that you cannot use arithmetic or copy assignment on entire arrays.
 
+Be careful!
+
+Using arrays incorrectly will cause your program to crash.
+
+    int  arr1[20];
+    arr1[9000] = 12;
+
+What's wrong with this code?
+The array `arr1` only has 20 elements,
+but we're trying to access it's 9000th element!
+
+Accessing data that does not exist is undefined behaviour.
+You just get junk numbers,
+and sometimes the operating system will blow up your program.
+
 ## 1.4 - Pointers and References
 
 ### 1.4.1 - Pointers
@@ -284,7 +299,7 @@ And, of course, pointers can be reassigned and whatnot:
     ptr1 = nullptr;
     *ptr2 = 12;
 
-One more quick thing; you can treat pointers like arrays:
+You can treat pointers like arrays:
 
     int  arr1[20];          //declare an array of 20 ints
     int* ptr1 = &arr1[0];   //pointer to zeroth element of arr1 stored into ptr1
@@ -293,6 +308,14 @@ One more quick thing; you can treat pointers like arrays:
     int  arr1[20];          //declare an array of 20 ints
     int* ptr1 = &arr1[5];   //pointer to 5th element of arr1 stored into ptr1
     ptr1[7] = 54;           //54 stored into the 7th elemnent after ptr1 (12th of arr1)
+
+Also, character arrays can be used like this:
+
+    const char* ptr1 = "I am a character array!";
+
+The `const` simply means that you cannot alter the data.
+You can reassign the pointer itself, though.
+We will talk more about character strings later.
 
 ### 1.4.2 - References
 
@@ -362,3 +385,14 @@ We can also take function parameters "by reference":
     }
 
 A `void` function is one with no return value.
+You can still use `return` in a `void` function, though:
+
+    void doNothing()
+    {
+        return;
+    }
+    
+    void doMoreNothing()
+    {
+        return doNothing();
+    }
