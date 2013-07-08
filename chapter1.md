@@ -132,6 +132,12 @@ it will be implicitly converted to the proper type.
 The third method calls the variable's constructor.
 We will learn more about this method later.
 
+You can also declare multiple variables on one line:
+
+    int x, y, z;
+
+This is usually frowned upon for anything more complex, though.
+
 ### 1.2.2 - Assignment
 
 Variable can also be reassigned and copied,
@@ -351,6 +357,8 @@ Another example:
 
 Alright, it's time to do some actual programming!
 
+### 1.5.1 - Implementation
+
 Make a function! Go!
 
     int add(int a, int b)
@@ -396,3 +404,58 @@ You can still use `return` in a `void` function, though:
     {
         return doNothing();
     }
+
+## 1.5.2 - Overloading
+
+What if we want two functions with the same name,
+but take different paramters?
+
+Well, you just do it!
+This is called "overloading":
+
+    int add(int a, int b)
+    {
+        return a+b;
+    }
+    
+    double add(double a, double b)
+    {
+        return a+b;
+    }
+    
+    int main()
+    {
+        int x = add(7, 12);         //Calls the int version
+        double y = add(7.7, 12.0);  //Calls the double version
+    }
+
+Easy.
+
+## 1.5.3 - Default Parameters
+
+You can specify certain parameters to be optional
+by giving them a default value:
+
+    int add(int a, int b = 12)
+    {
+        return a+b;
+    }
+    
+    int main()
+    {
+        int x = add(32); //Same as add(32, 12);
+    }
+
+Even in the middle of the paramter list:
+
+    int add(int a, int b = 12, int c)
+    {
+        return a+b+c;
+    }
+    
+    int main()
+    {
+        int x = add(32, , 50); //Same as add(32, 12, 50);
+    }
+
+Obviously, default parameters are usually only useful as the last parameters.
