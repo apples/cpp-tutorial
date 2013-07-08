@@ -46,6 +46,14 @@ we could also have written it like this:
         return 0;
     }
 
+Note that the condition must be a `bool`.
+If it is not a `bool`,
+it will be implicitly converted into a `bool`.
+For example, when an `int` is converted to a `bool`,
+if it is zero,
+it's `bool` value is `false`,
+otherwise, it is `true`.
+
 This is pretty simple, but `if` is not complete without...
 
 ### 2.1.2 - `else`
@@ -387,8 +395,175 @@ which we will learn about later.
 
 ## 2.4 - Scope
 
-TODO
+Curly braces are your friend.
+C++ is a lexically scoped language,
+which means that variables can only be seen by blocks of code
+that can clearly see them.
+
+### 2.4.1 - Namespace Scope
+
+C++ has a useful (some say) feature called namespaces.
+A `namespace` is simply a collection of objects and functions
+that belong together.
+For example, all of the standard libraries are in the namespace `std`.
+
+    #include <iostream>
+    int main()
+    {
+        std::cout << "Hello!" << std::endl;
+    }
+
+Anything not in a namespace is said to be in the "global" namespace.
+
+    int i;
+    int main()
+    {
+        ::i = 7;
+    }
+
+Of course, the global namespace is usually implicit,
+so `::i` could be replaced with just `i`.
+
+We can make a specific namespace be implicit for the current scope
+with `using namespace Name;`.
+
+    #include <iostream>
+    using namespace std;
+    int main()
+    {
+        cout << "Hello!" << endl;
+    }
+
+Make sure you understand that the namespace is implicit
+only for the current scope.
+This become important in the next section.
+
+### 2.4.2 - Block Scope
+
+Anything with curly braces is a block.
+A block can only see things in it's own scope
+or a higher scope.
+
+You can simply use empty braces:
+
+    int i;
+    /* i can be used here */
+    {
+        int j;
+        /* i and j can be used here */
+    }
+    /* j is no longer in scope, only i can be used here */
+
+Of course,
+all functions and flow constructs have their own scope:
+
+    int i;
+    int main()
+    {
+        int j;
+        if (j == i)
+        {
+            int k;
+        }
+        for (int a=0; a<10; ++a)
+        {
+            int l;
+        }
+    }
+
+Even if there are no braces,
+flow constructs still have their own scope:
+
+    int main()
+    {
+        int x;
+        for (int i=0; i<10; ++i) x += i;
+    }
+
+You cannot give two variable the same name,
+unless they're in different scopes.
+When a variable is given the same name as an exisiting variable,
+it will "shadow" the old variable,
+as seen here:
+
+    int x = 10;
+    {
+        int x = 20;         //Not the same x!
+        cout << x << endl;  // Prints "20"
+    }
+    cout << x << endl;      // Prints "10"
+
+Some constructs allow variables to be declared in their parameters.
+
+For example,
+the variable declared in a `for` loop is block-scoped in that `for` block,
+but it's declared outside of the curly braces:
+
+    for (int i=0; i<10; ++i) // i declared here
+    {
+        // Do stuff with i
+    }
+    // i is no longer in scope
+
+Other constructs also support this kind of scoping,
+but these are less idiomatic.
+
+    if (int i = someFunc())
+    {
+        //use i
+    }
+
+    while (int i = someFunc())
+    {
+        //use i
+    }
+
+This is what allows us to have two `for` loops that use the same variable name:
+
+    for (int i=0; i<10; ++i)
+    {}
+    
+    for (int i=0; i<20; ++i)
+    {}
 
 ## 2.5 - Recursion
 
-TODO
+Recursion is the simple act of a function calling itself.
+Many problems can be solved using recursion more easily than other methods
+such as iteration.
+
+Since a function is scoped in the namespace level,
+you can use the function within it's own scope.
+
+A common example is the factorial function
+
+    factorial(x) = x * (x-1) * (x-2) * ... * 1
+
+This iterative function can be implemented as follows:
+
+    int factorial(int x)
+    {
+        int rval = x;
+        while (--x > 0) rval *= x;
+        return rval;
+    }
+
+However, the problem can also be expressed recursively:
+
+    factorial(1) = 1
+    factorial(x) = x * factorial(x-1)
+
+And implemented thus:
+
+    int factorial(int x)
+    {
+        if (x <= 1) return 1;
+        else        return (x * factorial(x-1));
+    }
+
+Simple, right?
+You typically won't use recursion for something that can be done iteratively,
+because iteration is usually better and cleaner.
+However, for some problems,
+such as tunnelling down a tree structure,
+recursion is the way to go.
