@@ -140,10 +140,19 @@ They can be used as expected:
     int var1 = 7 + 3;
     int var2 = var1 - 4;
 
-Those 5 operators can be used with assignment:
+Those five operators can be used with assignment:
 
     int var1 = 16;
     var1 += 2;
+
+Don't think that the `%` operator has anything to do with modulus,
+it simply returns the remainder of integer division:
+
+    int x =  13 / 5;    // x == 2
+    int y =  13 % 5;    // y == 3
+    int z = -13 % 5;    // z == -3
+
+Although, for positive numbers, it's the same as modulus.
 
 Here are some unary operators:
 
@@ -1523,12 +1532,12 @@ This is useful when we want to do weird things to the values.
         public:
             int getVal() const
             {
-                return val/5;	// divide by 5 when getting
+                return val/5;    // divide by 5 when getting
             }
             
             void setVal(int i)
             {
-                val = i*5;	// multiply by 5 when setting
+                val = i*5;    // multiply by 5 when setting
             }
         
         private:
@@ -1548,30 +1557,30 @@ but, in my opinion, they tend to clutter things up a bit.
 
     class Point
     {
-	public:
-	    int getX() const
-	    {
-		return x;
-	    }
-	    
-	    void setX(int i)
-	    {
-		x = i;
-	    }
-	    
-	    int getY() const
-	    {
-		return y;
-	    }
-	    
-	    void setY(int i)
-	    {
-		y = i;
-	    }
-	
-	private:
-	    int x;
-	    int y;
+        public:
+            int getX() const
+            {
+                return x;
+            }
+            
+            void setX(int i)
+            {
+                x = i;
+            }
+            
+            int getY() const
+            {
+                return y;
+            }
+            
+            void setY(int i)
+            {
+                y = i;
+            }
+            
+        private:
+            int x;
+            int y;
     }
 
 Quite a lot of code for so little benefit.
@@ -1585,18 +1594,18 @@ more easily than with structs.
 
     class Point
     {
-	public:
-	    int x;
-	    int y;
-	    
-	    //constructor
-	    Point() : x(0), y(0)
-	    {}
+        public:
+            int x;
+            int y;
+            
+            //constructor
+            Point() : x(0), y(0)
+            {}
     };
     
     int main()
     {
-	Point p;
+        Point p;
     }
 
 The constructor is invoked upon the creation
@@ -1607,26 +1616,26 @@ Constructors can be overloaded just like functions.
 
     class Point
     {
-	public:
-	    int x;
-	    int y;
-	    
-	    Point()
-	      : x(0)
-	      , y(0)
-	    {}
-	    
-	    Point(int a, int b)
-	      : x(a)
-	      , y(b)
-	    {}
+        public:
+            int x;
+            int y;
+            
+            Point()
+                : x(0)
+                , y(0)
+            {}
+            
+            Point(int a, int b)
+                : x(a)
+                , y(b)
+            {}
     };
     
     int main()
     {
-	Point p1;
-	Point p2(4, 5);
-	Point p3{2, 7};
+        Point p1;
+        Point p2(4, 5);
+        Point p3{2, 7};
     }
 
 The comma-separated list after the `:` in the constructor
@@ -1639,33 +1648,33 @@ instead of directly initializing values from the list.
 
     class Point
     {
-	public:
-	    int x;
-	    int y;
-	    
-	    Point()
-	      : x(0)
-	      , y(0)
-	    {}
-	    
-	    Point(int a, int b)
-	      : x(a)
-	      , y(b)
-	    {}
+        public:
+            int x;
+            int y;
+            
+            Point()
+                : x(0)
+                , y(0)
+            {}
+            
+            Point(int a, int b)
+                : x(a)
+                , y(b)
+            {}
     };
     
     class Player
     {
-	public:
-	    Point pos;
-	    Point vel;
-	    int health;
-	    
-	    Player()
-		: pos{0, 0}
-		, vel{0, 0}
-		, health{100}
-	    {}
+        public:
+            Point pos;
+            Point vel;
+            int health;
+            
+            Player()
+                : pos{0, 0}
+                , vel{0, 0}
+                , health{100}
+            {}
     };
 
 #### 1.11.2.4 - Copying
@@ -1676,20 +1685,20 @@ Another special constructor is the "copy" constructor.
 
     class Point
     {
-	public:
-	    int x;
-	    int y;
-	    
-	    Point(const Point& in)
-		: x(in.x)
-		, y(in.y)
-	    {}
+        public:
+            int x;
+            int y;
+            
+            Point(const Point& in)
+                : x(in.x)
+                , y(in.y)
+            {}
     };
     
     int main()
     {
-	Point p1{7, 12};
-	Point p2(p1);
+        Point p1{7, 12};
+        Point p2(p1);
     }
 
 Although a copy constructor is usually automatically generated,
@@ -1697,22 +1706,22 @@ sometimes we don't want to copy every part of another object.
 
     class Point
     {
-	public:
-	    int x;
-	    int y;
-	    int useless;
-	    
-	    Point(const Point& in)
-		: x(in.x)
-		, y(in.y)
-		, useless(0) // ignore in.useless
-	    {}
+        public:
+            int x;
+            int y;
+            int useless;
+            
+            Point(const Point& in)
+                : x(in.x)
+                , y(in.y)
+                , useless(0) // ignore in.useless
+            {}
     };
     
     int main()
     {
-	Point p1{7, 12, 10};
-	Point p2(p1);
+        Point p1{7, 12, 10};
+        Point p2(p1);
     }
 
 ## 1.12 - Templates
@@ -1724,13 +1733,13 @@ which is a technique to generate code by using other code.
     template <typename T>
     T add(const T& a, const T& b)
     {
-	return a+b;
+        return a+b;
     }
     
     int main()
     {
-	int    x = add(3, 7);
-	double d = add(3.5, 7.12);
+        int    x = add(3, 7);
+        double d = add(3.5, 7.12);
     }
 
 You can think of it as "overloading a function for all possible types",
@@ -1741,17 +1750,17 @@ Classes can be templatized as well.
     template <typename T>
     class MyClass
     {
-	public:
-	    T val;
+        public:
+            T val;
     };
     
     int main()
     {
-	MyClass<int> x;
-	x.val = 7;
-	
-	MyClass<double> y;
-	y.val = 23.65;
+        MyClass<int> x;
+        x.val = 7;
+        
+        MyClass<double> y;
+        y.val = 23.65;
     }
 
 Templates are very powerful and should be used for generic programming.
@@ -1762,24 +1771,24 @@ You can specialize (think "overload") templates as well.
     template <typename T>
     class MyClass
     {
-	public:
-	    T val;
+        public:
+            T val;
     };
     
     template <>
     class MyClass<int>
     {
-	public:
-	    int intVal;
+        public:
+            int intVal;
     };
     
     int main()
     {
-	MyClass<int> x;
-	x.intVal = 7;
-	
-	MyClass<double> y;
-	y.val = 23.65;
+        MyClass<int> x;
+        x.intVal = 7;
+        
+        MyClass<double> y;
+        y.val = 23.65;
     }
 
 Other than types, you can also take integers:
@@ -1787,12 +1796,12 @@ Other than types, you can also take integers:
     template <int N>
     int sadd(int a)
     {
-	return a+N;
+        return a+N;
     }
     
     int main()
     {
-	int x = add<6>(3);
+        int x = add<6>(3);
     }
 
 It is impossible to give a dynamic value as a template parameter, though.
@@ -1800,14 +1809,14 @@ It is impossible to give a dynamic value as a template parameter, though.
     template <int N>
     int sadd(int a)
     {
-	return a+N;
+        return a+N;
     }
     
     int main()
     {
-	int i = 12;
-	int x = add<6>(i);
-	/* int y = add<i>(7); */ // ILLEGAL
+        int i = 12;
+        int x = add<6>(i);
+        /* int y = add<i>(7); */ // ILLEGAL
     }
 
 ## 1.13 - Automatic Type Deduction
@@ -1824,14 +1833,14 @@ However, the compiler is smart and can do this for us.
     template <typename T, typename U>
     void printSum(T a, U b)
     {
-	auto sum = a + b; // What type is sum? Nobody cares.
-	std::cout << sum << std::endl;
+        auto sum = a + b; // What type is sum? Nobody cares.
+        std::cout << sum << std::endl;
     }
     
     int main()
     {
-	printSum(5, 7.8);
-	printSum(5.12, 7);
+        printSum(5, 7.8);
+        printSum(5.12, 7);
     }
 
 We can also use `decltype` to find the type of an expression.
@@ -1842,14 +1851,14 @@ In this next case, whatever type `a+b` is, `sum` will be the same type.
     template <typename T, typename U>
     void printSum(T a, U b)
     {
-	decltype(a+b) sum = a + b;
-	std::cout << sum << std::endl;
+        decltype(a+b) sum = a + b;
+        std::cout << sum << std::endl;
     }
     
     int main()
     {
-	printSum(5, 7.8);
-	printSum(5.12, 7);
+        printSum(5, 7.8);
+        printSum(5.12, 7);
     }
 
 Using `decltype`,
@@ -1859,13 +1868,13 @@ we can write a proper summing function.
     template <typename T, typename U>
     auto sum(T a, U b) -> decltype(a+b)
     {
-	return a+b;
+        return a+b;
     }
     
     int main()
     {
-	auto   x = sum(4  , 7);
-	double y = sum(4.5, 7);
+        auto   x = sum(4  , 7);
+        double y = sum(4.5, 7);
     }
 
 The `->` points to the return type of the function.
