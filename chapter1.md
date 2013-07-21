@@ -9,7 +9,7 @@ Some notes before we begin:
 - This tutorial is only syntax and language
 
 If you need a compiler, get `gcc`.
-If you're on Windows, I recommend a version of [MinGW](http://nuwen.net/mingw.html).
+If you're on Windows, I recommend this version of [MinGW](http://nuwen.net/mingw.html).
 
 For editing code, I recommend [Geany](http://www.geany.org/).
 It has the nice ability to build and run code from within the editor,
@@ -150,7 +150,7 @@ it simply returns the remainder of integer division:
 
     int x =  13 / 5;    // x == 2
     int y =  13 % 5;    // y == 3
-    int z = -13 % 5;    // z == -3
+    int z = -13 % 5;    // z == -3 (would be 2 if using modulus)
 
 Although, for positive numbers, it's the same as modulus.
 
@@ -164,26 +164,7 @@ Here are some unary operators:
 | `a++` | Deferred increment
 | `a--` | Deferred decrement
 
-Comparison operations (returns a `bool`):
-
-| Usage    | Name |
-|:---------|:-----|
-| `a == b` | Equal
-| `a != b` | Not equal
-| `a > b`  | Greater than
-| `a >= b` | Greater than or equal
-| `a < b`  | Less than
-| `a <= b` | Less than or equal
-
-Boolean operations (only works on `bool`):
-
-| Usage    | Name |
-|:---------|:-----|
-| `a && b` | AND
-| <code>a &#124;&#124; b</code> | OR
-| `!a`     | NOT
-
-<!-- Plaintext readers: The second row above should read "| `a || b` | OR " -->
+Boolean operations will be convered in a later section (Flow Control).
 
 ### 1.2.4 - Conversion and Promotion
 
@@ -607,6 +588,29 @@ Luckily, we can.
 
 Branching is the act of making a decision and changing the flow of the program.
 
+Before we start, we need to know some basic operations.
+
+Comparison operations (returns a `bool`):
+
+| Usage    | Name |
+|:---------|:-----|
+| `a == b` | Equal
+| `a != b` | Not equal
+| `a > b`  | Greater than
+| `a >= b` | Greater than or equal
+| `a < b`  | Less than
+| `a <= b` | Less than or equal
+
+Boolean operations (only works on `bool`):
+
+| Usage    | Name |
+|:---------|:-----|
+| `a && b` | AND
+| <code>a &#124;&#124; b</code> | OR
+| `!a`     | NOT
+
+<!-- Plaintext readers: The second row above should read "a || b" -->
+
 #### 1.7.1.1 - `if`
 
 The `if` statement is one of the most basic branching constructs.
@@ -646,7 +650,7 @@ we could also have written it like this:
         return 0;
     }
 
-Note that the condition must be a `bool`.
+The condition must be a `bool`.
 If it is not a `bool`,
 it will be implicitly converted into a `bool`.
 For example, when an `int` is converted to a `bool`,
