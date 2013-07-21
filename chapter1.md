@@ -171,8 +171,6 @@ Boolean operations (only works on `bool`):
 | Usage    | Name |
 |:---------|:-----|
 | `a && b` | AND
-<!-- Please forgive me, plaintext viewers! -->
-<!-- The following is supposed to be "| `a || b` | OR " -->
 | <code>a &#124;&#124; b<code> | OR
 | `!a`     | NOT
 
