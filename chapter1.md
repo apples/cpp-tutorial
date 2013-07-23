@@ -143,7 +143,7 @@ They can be used as expected:
 Those five operators can be used with assignment:
 
     int var1 = 16;
-    var1 += 2;
+    var1 += 2;      //same as: var1 = var1 + 2;
 
 Don't think that the `%` operator has anything to do with modulus,
 it simply returns the remainder of integer division:
@@ -452,7 +452,7 @@ among other things.
         // onetwo == "One and Two"
     }
 
-The things in double-quotes `" "` are not `std::string`s,
+The things in double-quotes `" "` are not `std::string`,
 they are actually `const char*`,
 or character arrays,
 or just "string literals".
@@ -510,7 +510,7 @@ you can use `getline()`:
 ### 1.5.2 - String Conversions
 
 The `<string>` library provides many functions to convert between
-`std::string`s and basic arithmetic types, such as `int` and `double`.
+`std::string` and basic arithmetic types, such as `int` and `double`.
 
     #include <string>
     
@@ -538,7 +538,7 @@ and will become apparent if you ever actually use a different type.
 Arrays are pretty simple.
 They are contiguous lists of specific type.
 
-Here is an array of 20 `int`s:
+Here is an array of 20 `int`:
 
     int arr1[20];
 
@@ -1218,9 +1218,9 @@ you can do cool things like this:
         printString("world!");
     }
 
-The literal strings there are converted into `std::string`s
+The literal strings there are converted into `std::string`
 when passed to the function.
-Since the created `std::string`s are temporary,
+Since the created `std::string` are temporary,
 you normally wouldn't be able to take a reference to them
 (because they don't really exist anywhere),
 but since we're sending the temporary values to a
@@ -1870,15 +1870,15 @@ and a nice feature called "trailing returns",
 we can write a proper summing function.
 
     template <typename T, typename U>
-    auto sum(T a, U b) -> decltype(a+b)
+    auto sum(T a, U b) -> decltype(a+b) // note the `auto`
     {
         return a+b;
     }
     
     int main()
     {
-        auto   x = sum(4  , 7);
-        double y = sum(4.5, 7);
+        auto   x = sum(4  , 7); // `decltype(   int+int)` is int
+        double y = sum(4.5, 7); // `decltype(double+int)` is double
     }
 
 The `->` points to the return type of the function.
