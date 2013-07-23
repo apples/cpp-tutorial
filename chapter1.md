@@ -847,7 +847,7 @@ game, database, or similarly scalable application.
 These constructs are similar to normal loops,
 but they're designed to operate on ranges and lists.
 
-#### 1.7.3.1 - FOR
+#### 1.7.3.1 - `for(;;)`
 
 The `for` loop is probably the most common looping construct.
 A `while` only has a condition,
