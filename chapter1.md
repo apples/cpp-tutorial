@@ -361,7 +361,7 @@ All basic datatypes are compatible.
     }
 
 The `std::` means that `cout` is a member of the `std` namespace.
-Anyhting in `std::` is part of the standard library.
+Anything in `std::` is part of the standard library.
 
     #include <iostream>
     
@@ -1118,7 +1118,7 @@ trying to assign to it will assign to the thing that is referred to.
         a = j;        // copies j into i
     }
 
-Aside from avoid scope limitations,
+Aside from avoiding scope limitations,
 references are also used to avoid copying large amounts of data.
 For example,
 arrays can be quite large and difficult to pass to functions
