@@ -17,10 +17,17 @@ so you don't have to muck about with terminals and such.
 
 Basic usage of `gcc`:
 
-    gcc my_code.cpp
+    gcc -std=c++11 my_code.cpp
 
 Where `my_code.cpp` is your source code file.
 This will produce an executable called `a.out` that you can run from a terminal.
+
+C++11 is a huge expansion to C++.
+It contains so many additions that some compilers don't have full support yet.
+Even `gcc` does not fully support it,
+so it must be enabled with the `-std=c++11` flag.
+C++11 is used heavily in this tutorial,
+so it is highly advisable to find an up-to-date compiler.
 
 ## 1.1 - The `main()` Function
 
