@@ -172,8 +172,22 @@ They can be used as expected:
 
 ```C++
 int var1 = 7 + 3;
-int var2 = var1 - 4;
+int var2 = var1 * 4;
 ```
+
+They also follow the traditional order of operations,
+and can be grouped with parentheses `()`:
+
+```C++
+int var1 = 7 + 12 / 4 % 50 * 5 - 4;
+int var2 = (7 + (((12 / 4) % 50) * 5)) - 4; // var1 == var2
+```
+
+That is to say:
+`*`, `/`, and `%` operate first,
+in the order that they appear.
+Then, `+` and `-` operate,
+in the order that they appear.
 
 Those five operators can be used with assignment:
 
@@ -703,6 +717,59 @@ Boolean operations (only works on `bool`):
 | `!a`     | NOT
 
 <!-- Plaintext readers: The second row above should read "a || b" -->
+
+Boolean operators follow traditional order of operations:
+
+```C++
+int main()
+{
+    if (6 == 7 || 5 != 23 && (6 <= 8 || !(8 > 40)))
+    {}
+    
+    // same as above
+    if (6 == 7 || (5 != 23 && (6 <= 8 || !(8 > 40))))
+    {}
+}
+```
+
+Comparison operators operate first,
+in the order that they appear.
+The `!` operates next since it's unary,
+then `&&` operates,
+and finally `||`.
+
+Of course, parentheses groups are evaluated entirely
+and treated as a unit.
+
+C++ also guarantees short-circuit evaluation for boolean operators:
+
+```C++
+bool func()
+{
+    return true;
+}
+
+int main()
+{
+    if (7 == 7 || func()) // func() is *not* called
+    {}
+    
+    if (7 == 8 && func()) // func() is *not* called
+    {}
+}
+```
+
+In the above example,
+the first conditional short-circuits
+because `7 == 7` is `true`,
+therefore it does not matter what is on the other side of the `||`,
+the conditional is `true` regardless.
+
+The second conditional also short-circuits
+because `7 == 8` is `false`.
+Whether the right side of the `&&` is `true` or `false` does not matter,
+since both sides must be `true`;
+the conditional is `false`.
 
 #### 1.7.1.1 - `if`
 

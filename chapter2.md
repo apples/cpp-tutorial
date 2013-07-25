@@ -14,10 +14,10 @@ that were given to the program when launched.
 Here's what it looks like:
 
 ```C++
-    int main(int argc, char* argv[])
-    {
-        return 0;
-    }
+int main(int argc, char* argv[])
+{
+    return 0;
+}
 ```
 
 Once again, the `return 0;` is optional (*only for `main()`!*).
