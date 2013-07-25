@@ -1,5 +1,11 @@
 # 2 - Advanced Syntax and Standard Libraries
 
+It is recommended that you make sure to understand
+all previously covered topics
+before continuing.
+The topics from now on will assume that you have
+complete working knowledge of all previous topics.
+
 ## 2.1 - The `main(argc, argv)` Function
 
 This version of `main()` is used to examine the command-line arguments
@@ -8,10 +14,10 @@ that were given to the program when launched.
 Here's what it looks like:
 
 ```C++
-int main(int argc, char* argv[])
-{
-    return 0;
-}
+    int main(int argc, char* argv[])
+    {
+        return 0;
+    }
 ```
 
 Once again, the `return 0;` is optional (*only for `main()`!*).
