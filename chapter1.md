@@ -33,17 +33,21 @@ so it is highly advisable to find an up-to-date compiler.
 
 Every program needs a `main()` function. It looks like this:
 
-    int main()
-    {
-        return 0;
-    }
+```C++
+int main()
+{
+    return 0;
+}
+```
 
 More often, it looks like this:
 
-    int main(int argc, char** argv)
-    {
-        return 0;
-    }
+```cpp
+int main(int argc, char** argv)
+{
+    return 0;
+}
+```
 
 Those are the only two accepted forms of `main()`.
 In the second form, `argc` and `argv` represent the command used to run the program.
