@@ -7,10 +7,12 @@ that were given to the program when launched.
 
 Here's what it looks like:
 
-    int main(int argc, char* argv[])
-    {
-        return 0;
-    }
+```C++
+int main(int argc, char* argv[])
+{
+    return 0;
+}
+```
 
 Once again, the `return 0;` is optional (*only for `main()`!*).
 
@@ -22,28 +24,32 @@ The `argv` parameter is the "argument vector".
 It's the list of arguments, and it's size is equal to `argc`.
 The first argument is usually the program's name.
 
-    $ cat main.cpp
-    
-    #include <iostream>
-    int main(int argc, char* argv[])
-    {
-        for (int i=0; i<argc; ++i) std::cout << argv[i] << std::endl;
-        return 0;
-    }
-    
-    $ g++ main.cpp
-    
-    $ ./a.out one 2 Tree
-    ./a.out
-    one
-    2
-    Tree
+```Shell
+$ cat main.cpp
+
+#include <iostream>
+int main(int argc, char* argv[])
+{
+    for (int i=0; i<argc; ++i) std::cout << argv[i] << std::endl;
+    return 0;
+}
+
+$ g++ main.cpp
+
+$ ./a.out one 2 Tree
+./a.out
+one
+2
+Tree
+```
 
 In the above example,
 `argc` is `4`,
 and `argv` is equivalent to:
 
-    const char* argv[] = {"./a.out", "one", "2", "Tree", nullptr};
+```C++
+const char* argv[] = {"./a.out", "one", "2", "Tree", nullptr};
+```
 
 That is, an array of `const char*`.
 The last element is always null,
@@ -58,40 +64,42 @@ It's either "the name used to invoke the program" or it's empty.
 
 A semi-real-world example:
 
-    $ cat main.cpp
-    
-    #include <iostream>
-    #include <string>
-    using namespace std;
-    
-    int main(int argc, char* argv[])
-    {
-        string verbStr = "";
-        if (argc==2) verbStr = argv[1];
-        
-        bool verbose = (verbStr=="--verbose");
-        
-        if (verbose)
-        {
-            cout << "Program name: \"" << argv[0] << endl;
-            cout << "2 + 3 = ";
-        }
-        cout << 2+3 << endl;
-        
-        return 0;
-    }
-    
-    $ g++ main.cpp -o adder
-    
-    $ ./adder
-    5
-    
-    $ ./adder --verbose
-    Program name: ./adder
-    2 + 3 = 5
+```Shell
+$ cat main.cpp
 
-    $ ./adder --nope
-    5
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main(int argc, char* argv[])
+{
+    string verbStr = "";
+    if (argc==2) verbStr = argv[1];
+    
+    bool verbose = (verbStr=="--verbose");
+    
+    if (verbose)
+    {
+        cout << "Program name: \"" << argv[0] << endl;
+        cout << "2 + 3 = ";
+    }
+    cout << 2+3 << endl;
+    
+    return 0;
+}
+
+$ g++ main.cpp -o adder
+
+$ ./adder
+5
+
+$ ./adder --verbose
+Program name: ./adder
+2 + 3 = 5
+
+$ ./adder --nope
+5
+```
 
 The program name will vary between systems.
 
