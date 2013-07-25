@@ -161,7 +161,7 @@ but it's generally accepted that a `double` is twice as big as a `float`,
 hence the name.
 This means it's twice as precise.
 
-There is no signifigant performance difference
+There is usually no signifigant performance difference
 between `float` and `double`,
 so `double` is the recommended floating point type.
 
@@ -170,9 +170,545 @@ and therefore should only be used when extreme precision is needed.
 
 ## 2.3 - Dynamic Memory
 
-### 2.3.1 - `new` and `delete`
+An object that exists within a scope
+is created when it's declared
+and destroyed when the scope is closed.
+This might create a few problems in certain situations.
 
-### 2.3.2 - Smart Pointers
+Luckily, C++ provides a way to create objects outside of any scope.
+
+### 2.3.1 - Pointers
+
+Before we can create unscoped objects,
+we need to know what a "pointer" is.
+
+A pointer is very similar to a reference,
+but it's used a bit differently:
+
+```C++
+void square(int& i)
+{
+    i = i * i;
+}
+
+void square(int* p)
+{
+    *p = (*p) * (*p);
+}
+```
+
+To access the object referred to by the pointer,
+the pointer but be "dereferenced" using the `*` operator.
+The `*` operator returns a reference to the object.
+
+For example, dereferencing `int*` will give you `int&`.
+
+To create a pointer to an existing object,
+use the `&` operator.
+
+```C++
+void square(int* pi)
+{
+    *p = (*p) * (*p);
+}
+
+int main()
+{
+    int i = 7;
+    square(&i);
+}
+```
+
+One of the major differences between pointers and references
+is that a pointer can be reassigned.
+
+```C++
+void square(int* pi)
+{
+    *p = (*p) * (*p);
+}
+
+int main()
+{
+    int i = 7;
+    int j = 12;
+    int* p = nullptr;
+    
+    p = &i;
+    square(p);
+    
+    p = &j;
+    square(p);
+}
+```
+
+Pointers can also hold a special value, `nullptr`,
+which makes the pointer "null".
+A null pointer is a pointer that points to nothing.
+Dereferencing a null pointer is undefined behaviour,
+and is considered a logical error.
+
+```C++
+void square(int* pi)
+{
+    if (p) *p = (*p) * (*p); // Does nothing if p is null
+}
+
+int main()
+{
+    int i = 7;
+    int j = 12;
+    int* p = nullptr;
+    
+    square(p); // Safe: nothing happens
+    
+    p = &i;
+    square(p);
+    
+    p = &j;
+    square(p);
+}
+```
+
+Pointers can be implicitly cast to `bool`.
+If the pointer is null,
+it's `bool` value is `false`.
+If the pointer is *not* null,
+it's `bool` value is `true`.
+
+```C++
+void square(int* pi)
+{
+    *p = (*p) * (*p);
+}
+
+int main()
+{
+    int arr[2] = {7, 12};
+    
+    square(&arr[0]);
+    square(&arr[1]);
+}
+```
+
+Pointers can be manipulated using "pointer arithmetic",
+as long as they point to something in an array.
+
+```C++
+void square(int* pi)
+{
+    *p = (*p) * (*p);
+}
+
+int main()
+{
+    int arr[2] = {7, 12};
+    int* ptr = &arr[0];
+    
+    square(ptr);
+    ++ptr;
+    square(ptr);
+}
+```
+
+Pointers can be incremented and decremented,
+and support addition and subtraction with integers.
+
+```C++
+void square(int* pi)
+{
+    *p = (*p) * (*p);
+}
+
+int main()
+{
+    int arr[2] = {7, 12};
+    int* ptr = &arr[0];
+    
+    square(ptr);
+    square(ptr+1);
+}
+```
+
+Pointers to elements outside of the array are still valid pointers,
+but they cannot be dereferenced,
+similar to `nullptr`.
+
+Pointers can also be compared to each other.
+
+```C++
+void square(int& i)
+{
+    i = i * i;
+}
+
+int main()
+{
+    int arr[6] = {7, 12, 5, -8, 32, -43};
+    
+    for (int* ptr = arr; ptr != arr+6; ++ptr)
+    {
+        square(*ptr);
+    }
+}
+```
+
+In the above example,
+the array `arr` is implicitly cast to a pointer.
+When an array is cast to a pointer,
+it gives a pointer to it's zeroth element.
+Since `arr` has `6` elements,
+it's valid subscripts are `0` through `5`.
+Adding `arr+6` gives us a pointer to `arr[6]`,
+which is one element past the last element in `arr`.
+Since we can't dereference this pointer,
+we use it as the stopping point for our loop.
+
+That is the idiomatic form of "iteration".
+
+```C++
+void square(int& i)
+{
+    i = i * i;
+}
+
+int main()
+{
+    int arr[6] = {7, 12, 5, -8, 32, -43};
+    
+    for (int& i : arr)
+    {
+        square(&i);
+    }
+}
+```
+
+Taking the address of a reference
+gives the address of the object it refers to,
+since it's not reasonable to take the address of a reference.
+
+However, it is possible to take the address of a pointer.
+
+```C++
+void square(int& i)
+{
+    i = i * i;
+}
+
+void square(int* p)
+{
+    *p = (*p) * (*p);
+}
+
+int main()
+{
+    int i = 7;
+    int* ptr = &i;
+    int** ptrptr = &ptr;
+    
+    square(*ptrptr);    // Calls square(int*)
+    square(**ptrptr);   // Calls square(int&)
+}
+```
+
+While references only refer to other objects,
+pointers are objects themselves,
+and have the associated semantics.
+
+```C++
+void square(int*& p)
+{
+    *p = (*p) * (*p);
+    p = nullptr;
+}
+
+int main()
+{
+    int i = 7;
+    int* ptr = &i;
+    
+    square(ptr);    // square() sets ptr to nullptr
+    //square(&i);   // ILLEGAL: cannot take reference to temporary object (&i)
+}
+```
+
+A pointer can be `const`,
+but it's more common to see a pointer point to a `const` object.
+
+```C++
+#include <iostream>
+
+void print(const int* p)
+{
+    std::cout << *p << std::endl;
+}
+
+int main()
+{
+    int i = 7;
+    int* ptr = &i;
+    
+    print(ptr);
+}
+```
+
+In the above example,
+in the `print()` function,
+`p` is mutable and can be reassigned and such,
+but `(*p)` is `const`.
+
+### 2.3.2 - `new` and `delete`
+
+To create an object outside of scope,
+we need to use `new`.
+
+```C++
+int main()
+{
+    int* ptr = new int;
+    delete ptr;
+}
+```
+
+Using `new` is similar to declaring a variable,
+except you do not give it a name.
+Instead, `new` returns a pointer to the object.
+
+Constructors can be easily called.
+
+```C++
+int main()
+{
+    int* ptr1 = new int(7);
+    int* ptr2 = new int(12);
+    delete ptr2;
+    delete ptr1;
+}
+```
+
+When a pointer is obtained from `new`,
+the object must be deleted with a matching call to `delete`.
+If it is not deleted,
+and the pointer is lost,
+the object remains in memory,
+but it is inaccessible.
+This is known as a "memory leak".
+
+Arrays have special handling.
+
+```C++
+int main()
+{
+    int* ptr = new int[128];
+    delete[] ptr;
+}
+```
+
+All elements in the array are default constructed.
+
+Pointers can be copied around like the basic types.
+
+```C++
+struct Point
+{
+    double x;
+    double y;
+};
+
+Point* makePoint()
+{
+    return new Point{0.0, 0.0};
+}
+
+void killPoint(Point*& p)
+{
+    delete p;
+    p = nullptr;
+}
+
+int main()
+{
+    Point* ptr = makePoint();
+    killPoint(ptr);
+}
+```
+
+When using a pointer to a structure or class,
+it's members can be accessed in two ways:
+
+```C++
+struct Point
+{
+    double x;
+    double y;
+};
+
+Point* makePoint()
+{
+    return new Point{0.0, 0.0};
+}
+
+void killPoint(Point*& p)
+{
+    delete p;
+    p = nullptr;
+}
+
+int main()
+{
+    Point* ptr = makePoint();
+    
+    (*ptr).x = 7.34;
+    ptr->y   = 12.8;
+    
+    killPoint(ptr);
+}
+```
+
+The arrow `->` (or "drill") is preferred in most cases.
+
+### 2.3.3 - Smart Pointers
+
+As you may have noticed,
+deleting pointers is a bit of a pain.
+It's a good thing some smart people invented smart pointers.
+
+#### 2.3.3.1 - `std::shared_ptr`
+
+```C++
+#include <memory>
+
+struct Point
+{
+    double x;
+    double y;
+};
+
+std::shared_ptr<Point> makePoint()
+{
+	std::shared_ptr<Point> rval(new Point{0.0, 0.0});
+    return rval;
+}
+
+int main()
+{
+    std::shared_ptr<Point> ptr = makePoint();
+    
+    (*ptr).x = 7.34;
+    ptr->y   = 12.8;
+}
+```
+
+A `std::shared_ptr` works exactly like a normal pointer,
+except the object it points to is automatically deleted
+when all copies of the `std::shared_ptr` are lost.
+
+```C++
+#include <memory>
+
+struct Point
+{
+    double x;
+    double y;
+};
+
+std::shared_ptr<Point> makePoint()
+{
+	std::shared_ptr<Point> rval(new Point{0.0, 0.0});
+    return rval;
+}
+
+void movePoint(std::shared_ptr<Point> p)
+{
+    p->x += 5.0;
+    p->y += 5.0;
+}
+
+int main()
+{
+    std::shared_ptr<Point> ptr1 = makePoint();
+    std::shared_ptr<Point> ptr2(new Point{0.0, 0.0});
+    
+    (*ptr1).x = 7.34;
+    ptr1->y   = 12.8;
+    
+    movePoint(ptr2);
+}
+```
+
+It is important to know that the object is not deleted
+until all `std::shared_ptr` that reference it are
+deleted.
+
+```C++
+#include <memory>
+int main()
+{
+    std::shared_ptr<int> ptr{nullptr};
+    // *ptr = 7; ILLEGAL: ptr is null
+    ptr.reset(new int);
+    *ptr = 7;
+}
+```
+
+Resetting a smart pointer replaces the existing object with a new one,
+deleting the old one if necessary.
+
+#### 2.3.3.2 - `std::unique_ptr`
+
+A `std::unique_ptr` acts just like a `std::shared_ptr`,
+but it cannot be copied,
+only moved.
+
+```C++
+#include <memory>
+using namespace std;
+
+struct Point
+{
+    double x;
+    double y;
+};
+
+unique_ptr<Point> makePoint()
+{
+	unique_ptr<Point> rval{new Point{0.0, 0.0}};
+    return rval;
+}
+
+//void func(unique_ptr<Point>); ILLEGAL: can't copy a std::unique_ptr
+
+int main()
+{
+    unique_ptr<Point> ptr = makePoint();
+    
+    (*ptr).x = 7.34;
+    ptr->y   = 12.8;
+    
+    //unique_ptr<Point> nope = ptr; ILLEGAL: can't copy a std::unique_ptr
+}
+```
+
+Since a `std::unique_ptr` can be moved,
+it can be returned from a function.
+A `std::unique_ptr` is typically used when a smart pointer is needed,
+but control over the object's deletion needs to be guaranteed.
+A `std::shared_ptr` might keep an object alive for longer than necessary,
+but a `std::unique_ptr` cannot be copied,
+so it's guaranteed to delete the referenced object.
+
+```C++
+#include <memory>
+int main()
+{
+    std::unique_ptr<int> ptr{nullptr};
+    // *ptr = 7; ILLEGAL: ptr is null
+    ptr.reset(new int(12));
+    *ptr = 7;
+}
+```
+
+Even though a `std::unique_ptr` cannot be copied, it can still be reset.
 
 ## 2.4 - Standard Libraries
 
