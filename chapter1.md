@@ -8,26 +8,40 @@ Some notes before we begin:
 
 - This tutorial is only syntax and language
 
-If you need a compiler, get `gcc`.
-If you're on Windows, I recommend this version of [MinGW](http://nuwen.net/mingw.html).
+If you need a compiler, GCC is recommended.
+If you're on Windows,
+I recommend [this version of MinGW](http://nuwen.net/mingw.html),
+which has C++11 enabled by default,
+and comes with a lot of useful libraries,
+such as [Boost](http://www.boost.org/).
 
 For editing code, I recommend [Geany](http://www.geany.org/).
 It has the nice ability to build and run code from within the editor,
-so you don't have to muck about with terminals and such.
+so you don't have to muck about with terminals and such,
+especially on Windows.
 
-Basic usage of `gcc`:
+[Visual C++](http://msdn.microsoft.com/en-us/vstudio/hh386302)
+is also very good,
+and has its own IDE (integrated development environment)
+and compiler.
+It's designed as an all-in-one development environment for Windows.
 
-    gcc -std=c++11 my_code.cpp
+Basic usage of GCC:
+
+    g++ -std=c++11 my_code.cpp
 
 Where `my_code.cpp` is your source code file.
 This will produce an executable called `a.out` that you can run from a terminal.
 
 C++11 is a huge expansion to C++.
 It contains so many additions that some compilers don't have full support yet.
-Even `gcc` does not fully support it,
+Even GCC does not fully support it,
 so it must be enabled with the `-std=c++11` flag.
 C++11 is used heavily in this tutorial,
 so it is highly advisable to find an up-to-date compiler.
+
+Visual C++ supports a lot of C++11,
+but it's not quite as good as GCC yet.
 
 ## 1.1 - The `main()` Function
 
@@ -43,7 +57,7 @@ int main()
 More often, it looks like this:
 
 ```C++
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
     return 0;
 }
