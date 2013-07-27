@@ -45,7 +45,13 @@ but it's not quite as good as GCC yet.
 
 ## 1.1 - The `main()` Function
 
-Every program needs a `main()` function. It looks like this:
+Every program needs a `main()` function.
+You can think of the `main()` function as the front door of your program.
+When your program is started,
+the `main()` function is called.
+When the `main()` function ends,
+your program also ends.
+It looks like this:
 
 ```C++
 int main()
@@ -53,20 +59,6 @@ int main()
     return 0;
 }
 ```
-
-More often, it looks like this:
-
-```C++
-int main(int argc, char* argv[])
-{
-    return 0;
-}
-```
-
-Those are the only two accepted forms of `main()`.
-In the second form, `argc` and `argv` represent the command used to run the program.
-You'll learn how to use these later,
-so just use the first version of `main()` for now.
 
 The `return 0;` is the return code of the program.
 Returning `0` means that the program ended normally.
