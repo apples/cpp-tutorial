@@ -43,6 +43,27 @@ so it is highly advisable to find an up-to-date compiler.
 Visual C++ supports a lot of C++11,
 but it's not quite as good as GCC yet.
 
+## 1.0 - Comments
+
+Comments are important in C++.
+Comments allow you to communicate with other programmers
+who read your code.
+
+Comments look like this:
+
+```C++
+// This is a one-line comment.
+
+/*
+This is a multi-line comment.
+It can be as long as you want.
+*/
+```
+
+Anything inside a comment is completely ignored.
+You should use comments to make notes while writing your code.
+I will use them in this tutorial as a supplement my examples.
+
 ## 1.1 - The `main()` Function
 
 Every program needs a `main()` function.
@@ -60,14 +81,25 @@ int main()
 }
 ```
 
+The `int` means that the `main()` function will return an integer.
 The `return 0;` is the return code of the program.
 Returning `0` means that the program ended normally.
 
-If you do not return anything at all from `main()`,
-it will return `0` by default.
-This only works for `main()` and is *not* true for other functions.
+The curly braces `{}` are the code block of the `main()` function.
+All functions have a code block.
+Instructions placed inside the code block will be executed sequentially.
 
 ## 1.2 - Basic Datatypes and Arithmetic
+
+C++ focuses heavily on datatypes and variables.
+
+A "variable" is a piece of information that has a value and a datatype.
+A "datatype" is a semantic value assigned to a variable.
+
+For example, let's say you have a variable called `size`.
+Just knowing the name of the variable doesn't tell us everything.
+What is `size`? Is it an integer? A fraction? A complex number, maybe?
+To find this information, we look at the datatype.
 
 ### 1.2.1 - Datatypes and Declarations
 
